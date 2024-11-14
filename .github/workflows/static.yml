@@ -32,8 +32,8 @@ jobs:
 
       - name: Create Node Environment  # Sets up Node.js environment.
         uses: actions/setup-node@v4
-        with: 
-          node-version: 16.x
+        with:
+          node-version: 18.x
 
       - name: Install Packages and Build Application  # Installs npm packages and builds the Vue.js application.
         run: |
@@ -73,7 +73,7 @@ jobs:
       - name: Deploy to GitHub Pages  # Deploys the application to GitHub Pages.
         id: deployment
         uses: actions/deploy-pages@v2  # Specifies the version of the deployment action.
-        
+
   # # Single deploy job since we're just deploying
   # deploy:
   #   environment:
