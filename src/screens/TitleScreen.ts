@@ -11,8 +11,7 @@ import { navigation } from '../navigation';
 import { storage } from '../storage';
 import { AudioButton } from '../ui/buttons/AudioButton';
 import { PrimaryButton } from '../ui/buttons/PrimaryButton';
-import { PixiLogo } from '../ui/PixiLogo';
-import { Porthole } from '../ui/Porthole';
+// import { PixiLogo } from '../ui/PixiLogo';
 import { Title } from '../ui/Title';
 import { i18n } from '../utils/i18n';
 import { throttle } from '../utils/throttle';
@@ -33,16 +32,16 @@ export class TitleScreen extends Container implements AppScreen {
     private readonly _background: TilingSprite;
 
     private _title!: Title;
-    private _pixiLogo!: PixiLogo;
+    // private _pixiLogo!: PixiLogo;
     private _cannon!: Cannon;
     private _footer!: Graphics;
-    private _forkBtn!: PrimaryButton;
+    // private _forkBtn!: PrimaryButton;
     private _playBtn!: PrimaryButton;
     private _audioBtn!: AudioButton;
     /** An animated background decor instance */
-    private _portholeOne!: Porthole;
+    // private _portholeOne!: Porthole;
     /** An animated background decor instance */
-    private _portholeTwo!: Porthole;
+    // private _portholeTwo!: Porthole;
     /** The angle of the cannon aim relative to the mouse position */
     private _aimAngle!: number;
     /** A container to group visual elements for easier animation */
@@ -58,12 +57,14 @@ export class TitleScreen extends Container implements AppScreen {
         // Create the background
         this._background = new TilingSprite({
             texture: Texture.from('background-tile'),
-            width: 64,
-            height: 64,
+            width: 40,
+            height: 40,
+            backgroundColor: 0x6AB6AF,
+            border: 0,
             tileScale: {
                 x: designConfig.backgroundTileScale,
                 y: designConfig.backgroundTileScale,
-            },
+          },
             interactive: true,
         });
         this.addChild(this._background);
@@ -89,10 +90,10 @@ export class TitleScreen extends Container implements AppScreen {
     /** Called before `show` function, can receive `data` */
     public prepare() {
         // Reset the animations of the portholes
-        this._portholeOne.stop();
-        this._portholeTwo.stop();
+        // this._portholeOne.stop();
+        // this._portholeTwo.stop();
 
-        // // Reset the positions of the group containers
+        // Reset the positions of the group containers
         gsap.set(this._topAnimContainer, { y: -350 });
         gsap.set(this._midAnimContainer, { x: 200 });
         gsap.set(this._bottomAnimContainer, { y: 350 });
@@ -111,8 +112,8 @@ export class TitleScreen extends Container implements AppScreen {
         this.alpha = 0;
 
         // Starts the animations for the background porthole details
-        this._portholeOne.start();
-        this._portholeTwo.start();
+        // this._portholeOne.start();
+        // this._portholeTwo.start();
 
         // Force the audio button to change icon based on audio mute state
         this._audioBtn.forceSwitch(storage.getStorageItem('muted'));
@@ -146,8 +147,8 @@ export class TitleScreen extends Container implements AppScreen {
         await gsap.to(this, { alpha: 0, duration: 0.2, ease: 'linear' });
 
         // Stop portholes to prevent them from animating when not on screen
-        this._portholeOne.stop();
-        this._portholeTwo.stop();
+        // this._portholeOne.stop();
+        // this._portholeTwo.stop();
     }
 
     /**
@@ -165,15 +166,15 @@ export class TitleScreen extends Container implements AppScreen {
         this._title.view.x = w * 0.5;
         this._title.view.y = 145;
 
-        this._pixiLogo.view.x = 55;
-        this._pixiLogo.view.y = h - 40;
+        // this._pixiLogo.view.x = 55;
+        // this._pixiLogo.view.y = h - 40;
 
         this._footer.width = w * 1.2;
         this._footer.x = w * 0.5;
         this._footer.y = h;
 
-        this._forkBtn.x = w - this._pixiLogo.view.x;
-        this._forkBtn.y = this._pixiLogo.view.y + this._forkBtn.height * 0.5 - 5;
+        // this._forkBtn.x = w - this._pixiLogo.view.x;
+        // this._forkBtn.y = this._pixiLogo.view.y + this._forkBtn.height * 0.5 - 5;
 
         this._audioBtn.x = w - 40;
         this._audioBtn.y = 40;
@@ -184,11 +185,11 @@ export class TitleScreen extends Container implements AppScreen {
         this._playBtn.x = w * 0.5;
         this._playBtn.y = this._cannon.view.y - this._cannon.view.height / 2 - this._playBtn.height / 2 + 10;
 
-        this._portholeOne.view.x = 40;
-        this._portholeOne.view.y = 40;
-
-        this._portholeTwo.view.x = w - 40;
-        this._portholeTwo.view.y = this._title.view.y + this._title.view.height + 10;
+        // this._portholeOne.view.x = 40;
+        // this._portholeOne.view.y = 40;
+        //
+        // this._portholeTwo.view.x = w - 40;
+        // this._portholeTwo.view.y = this._title.view.y + this._title.view.height + 10;
 
         // Set hit area of hit container to fit screen
         // Leave a little room to prevent interaction bellow the cannon
@@ -232,55 +233,55 @@ export class TitleScreen extends Container implements AppScreen {
         const type = randomType();
 
         // Use the type to assign a colour
-        this._footer = new Graphics().ellipse(0, 0, 300, 125).fill({ color: boardConfig.bubbleTypeToColor[type] });
+        this._footer = new Graphics()
         this._bottomAnimContainer.addChild(this._footer);
 
         this._cannon = new Cannon();
         this._cannon.view.scale.set(0.75);
         this._cannon.type = type;
-        this._bottomAnimContainer.addChild(this._cannon.view);
+        // this._bottomAnimContainer.addChild(this._cannon.view);
 
-        this._pixiLogo = new PixiLogo();
-        this._pixiLogo.view.scale.set(0.35);
-        this._bottomAnimContainer.addChild(this._pixiLogo.view);
+        // this._pixiLogo = new PixiLogo();
+        // this._pixiLogo.view.scale.set(0.35);
+        // this._bottomAnimContainer.addChild(this._pixiLogo.view);
 
-        this._portholeOne = new Porthole();
-        this._topAnimContainer.addChild(this._portholeOne.view);
+        // this._portholeOne = new Porthole();
+        // this._topAnimContainer.addChild(this._portholeOne.view);
 
-        this._portholeTwo = new Porthole();
-        this._midAnimContainer.addChild(this._portholeTwo.view);
+        // this._portholeTwo = new Porthole();
+        // this._midAnimContainer.addChild(this._portholeTwo.view);
     }
 
     /** Add buttons to screen. */
     private _buildButtons() {
-        this._forkBtn = new PrimaryButton({
-            text: i18n.t('forkGithub'),
-            textStyle: {
-                fill: 0xe91e63,
-                fontFamily: 'Opensans Semibold',
-                fontWeight: 'bold',
-                align: 'center',
-                fontSize: 16,
-            },
-            buttonOptions: {
-                defaultView: 'pixi-btn-up',
-                pressedView: 'pixi-btn-down',
-                textOffset: {
-                    default: {
-                        y: -13,
-                    },
-                    pressed: {
-                        y: -8,
-                    },
-                },
-            },
-        });
+        // this._forkBtn = new PrimaryButton({
+        //     text: i18n.t('forkGithub'),
+        //     textStyle: {
+        //         fill: 0xe91e63,
+        //         fontFamily: 'Opensans Semibold',
+        //         fontWeight: 'bold',
+        //         align: 'center',
+        //         fontSize: 16,
+        //     },
+        //     buttonOptions: {
+        //         defaultView: 'pixi-btn-up',
+        //         pressedView: 'pixi-btn-down',
+        //         textOffset: {
+        //             default: {
+        //                 y: -13,
+        //             },
+        //             pressed: {
+        //                 y: -8,
+        //             },
+        //         },
+        //     },
+        // });
 
-        this._forkBtn.onPress.connect(() => {
-            window.open(designConfig.forkMeURL, '_blank')?.focus();
-        });
-
-        this._bottomAnimContainer.addChild(this._forkBtn);
+        // this._forkBtn.onPress.connect(() => {
+        //     window.open(designConfig.forkMeURL, '_blank')?.focus();
+        // });
+        //
+        // this._bottomAnimContainer.addChild(this._forkBtn);
 
         this._audioBtn = new AudioButton();
         this._topAnimContainer.addChild(this._audioBtn);

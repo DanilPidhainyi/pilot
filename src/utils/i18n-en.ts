@@ -3,7 +3,7 @@
  */
 export const i18nDict = {
     pixiLogoHeader: 'Made with',
-    gameTitle: 'BUBBO',
+    gameTitle: 'AIRPLANE',
     gameSubtitle: 'SPACE MACHINE',
     titlePlay: 'SHOOT BUBBLES!',
     forkGithub: 'Fork me\non Github',

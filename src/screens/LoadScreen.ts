@@ -1,11 +1,11 @@
 import gsap from 'gsap';
 import { Container, Sprite, Texture, Ticker, TilingSprite } from 'pixi.js';
 
-import { randomType } from '../game/boardConfig';
+// import { randomType } from '../game/boardConfig';
 import { designConfig } from '../game/designConfig';
-import { Cannon } from '../game/entities/Cannon';
-import { PixiLogo } from '../ui/PixiLogo';
-import { i18n } from '../utils/i18n';
+// import { Cannon } from '../game/entities/Cannon';
+// import { PixiLogo } from '../ui/PixiLogo';
+// import { i18n } from '../utils/i18n';
 import { lerp } from '../utils/maths/maths';
 import { randomRange } from '../utils/maths/rand';
 
@@ -18,8 +18,8 @@ export class LoadScreen extends Container {
 
     private readonly _background: TilingSprite;
     private readonly _spinner: Sprite;
-    private readonly _cannon: Cannon;
-    private readonly _pixiLogo: PixiLogo;
+    // private readonly _cannon: Cannon;
+    // private readonly _pixiLogo: PixiLogo;
 
     /** An added container to animate the pixi logo off screen. */
     private _bottomContainer = new Container();
@@ -34,8 +34,8 @@ export class LoadScreen extends Container {
         // Create the visual aspects of the load screen
         this._background = new TilingSprite({
             texture: Texture.from('background-tile'),
-            width: 64,
-            height: 64,
+            width: 40,
+            height: 40,
             tileScale: {
                 x: designConfig.backgroundTileScale,
                 y: designConfig.backgroundTileScale,
@@ -47,15 +47,15 @@ export class LoadScreen extends Container {
         this._spinner.anchor.set(0.5);
         this.addChild(this._spinner);
 
-        this._cannon = new Cannon();
-        this._cannon.view.scale.set(0.5);
-        this._cannon.type = randomType();
-        this.addChild(this._cannon.view);
-
-        this._pixiLogo = new PixiLogo(i18n.t('pixiLogoHeader'));
-        this._pixiLogo.view.scale.set(0.75);
-        this._bottomContainer.addChild(this._pixiLogo.view);
-        this.addChild(this._bottomContainer);
+        // this._cannon = new Cannon();
+        // this._cannon.view.scale.set(0.5);
+        // this._cannon.type = randomType();
+        // this.addChild(this._cannon.view);
+        //
+        // this._pixiLogo = new PixiLogo(i18n.t('pixiLogoHeader'));
+        // this._pixiLogo.view.scale.set(0.75);
+        // this._bottomContainer.addChild(this._pixiLogo.view);
+        // this.addChild(this._bottomContainer);
     }
 
     /** Called when the screen is being shown. */
@@ -97,7 +97,7 @@ export class LoadScreen extends Container {
         this._spinner.rotation -= delta / 60;
 
         // Lerp the rotations of the cannon to the spinner rotation but with an offset
-        this._cannon.rotation = lerp(this._cannon.rotation, this._spinner.rotation - this._targetOffset, 0.1);
+        // this._cannon.rotation = lerp(this._cannon.rotation, this._spinner.rotation - this._targetOffset, 0.1);
 
         // When tick is zero, randomise aforementioned offset
         if (this._tick <= 0) {
@@ -120,10 +120,10 @@ export class LoadScreen extends Container {
         this._background.height = h;
 
         // Set visuals to their respective locations
-        this._spinner.x = this._cannon.view.x = w * 0.5;
-        this._spinner.y = this._cannon.view.y = h * 0.5;
+        // this._spinner.x = this._cannon.view.x = w * 0.5;
+        // this._spinner.y = this._cannon.view.y = h * 0.5;
 
-        this._pixiLogo.view.x = w * 0.5;
-        this._pixiLogo.view.y = h - 55;
+        // this._pixiLogo.view.x = w * 0.5;
+        // this._pixiLogo.view.y = h - 55;
     }
 }
