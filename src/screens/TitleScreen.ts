@@ -92,7 +92,7 @@ export class TitleScreen extends Container implements AppScreen {
         this._portholeOne.stop();
         this._portholeTwo.stop();
 
-        // Reset the positions of the group containers
+        // // Reset the positions of the group containers
         gsap.set(this._topAnimContainer, { y: -350 });
         gsap.set(this._midAnimContainer, { x: 200 });
         gsap.set(this._bottomAnimContainer, { y: 350 });

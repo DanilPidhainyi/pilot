@@ -2,6 +2,7 @@ import { Assets, Container, Ticker } from 'pixi.js';
 
 import { areBundlesLoaded } from './assets';
 import { app } from './main';
+import { LoadScreen } from "./screens/LoadScreen";
 
 /** Interface for app screens */
 export interface AppScreen<T = any> extends Container {
@@ -57,7 +58,7 @@ class Navigation {
      * Set the default load screen.
      * @param Ctor - The constructor for the load screen.
      * */
-    public setLoadScreen(Ctor: AppScreenConstructor) {
+    public setLoadScreen(Ctor: LoadScreen) {
         this.loadScreen = this._getScreen(Ctor);
     }
 

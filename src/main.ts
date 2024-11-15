@@ -50,6 +50,7 @@ async function init() {
 
     // Add pixi canvas element to the document's body
     document.body.appendChild(app.canvas);
+    document.getElementById('loader').style.display = 'none';
 
     // Whenever the window resizes, call the 'resize' function
     window.addEventListener('resize', resize);
