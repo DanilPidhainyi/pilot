@@ -5,10 +5,9 @@ export class Player extends Physics.Arcade.Image {
 
     // Player states: waiting, start, can_move
     state = "waiting";
-    // propulsion_fire = null;
     scene = null;
     bullets = null;
-    baseSpeed = 200;
+    baseSpeed = 600;
     angleDelta = 2;
 
     constructor({scene}) {
@@ -17,6 +16,13 @@ export class Player extends Physics.Arcade.Image {
         this.scene = scene;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
+        this.setDamping(true); // Включення демпінгу
+        this.setDrag(100);    // Тертя: чим більше, тим сильніше гальмує
+        this.setMaxVelocity(400); // Максимальна швидкість
+
+        this.body.setAngularDrag(0.2); // Дампінг для кутової швидкості
+        // this.body.setMaxAngular(300);  // Максимальна швидкість обертання
+
 
         // this.propulsion_fire = this.scene.add.sprite(this.x - 32, this.y, "propulsion-fire");
         // this.propulsion_fire.play("fire");
@@ -49,18 +55,6 @@ export class Player extends Physics.Arcade.Image {
             },
             onComplete: () => {
                 // Destroy all the trail FX
-                propulsion_fires_trail.forEach((propulsion, i) => {
-                    this.scene.tweens.add({
-                        targets: propulsion,
-                        alpha: 0,
-                        scale: 0.5,
-                        duration: 200 + (i * 2),
-                        ease: "Power2",
-                        onComplete: () => {
-                            propulsion.destroy();
-                        }
-                    });
-                });
 
                 // this.propulsion_fire.setPosition(this.x - 32, this.y);
 
@@ -82,11 +76,11 @@ export class Player extends Physics.Arcade.Image {
                 this.updatePropulsionFire();
             }
             if (direction === "left" ) {
-                this.angle -= this.angleDelta
-                this.speed += this.baseSpeed;
+                // this.angle -= this.angleDelta
+                this.body.angularVelocity -= this.angleDelta;
             } else if (direction === "right") {
-                this.angle += this.angleDelta;
-                this.speed += this.baseSpeed;
+                // this.angle += this.angleDelta;
+                this.body.angularVelocity += this.angleDelta;
             }
         }
     }
@@ -107,15 +101,18 @@ export class Player extends Physics.Arcade.Image {
 
     update() {
         // Sinusoidal movement up and down up and down 2px
-        this.y += Math.sin(this.scene.time.now / 200) * 0.10;
+        // this.y += Math.sin(this.scene.time.now / 200) * 0.10;
         // this.propulsion_fire.y = this.y;
 
         const angleInRadians = Phaser.Math.DegToRad(this.angle);
 
         // Використовуємо фізику для руху
-        this.body.velocity.x = Math.cos(angleInRadians) * this.speed;
-        this.body.velocity.y = Math.sin(angleInRadians) * this.speed + this.scene.physics.world.gravity.y;
-        this.speed = this.baseSpeed;
+        // this.body.velocity.x = Math.cos(angleInRadians) * this.speed;
+        // this.body.velocity.y = Math.sin(angleInRadians) * this.speed + this.scene.physics.world.gravity.y;
+        const x = Math.cos(angleInRadians) * this.speed;
+        const y = Math.sin(angleInRadians) * this.speed;
+
+        this.setAcceleration(x, y)
     }
 
 }
