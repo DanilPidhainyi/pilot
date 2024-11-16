@@ -8,6 +8,7 @@ export class MainScene extends Scene {
     cursors = null;
 
     points = 0;
+    pointer = null;
     game_over_timeout = 20;
 
     constructor() {
@@ -26,8 +27,6 @@ export class MainScene extends Scene {
     }
 
     create() {
-        // this.add.image(0, 0, "background")
-        //     .setOrigin(0, 0);
 
         // Створення TileSprite
         this.background = this.add.tileSprite(0, 0, 2400, 2400, 'background-tile');
@@ -37,6 +36,7 @@ export class MainScene extends Scene {
 
         // Player
         this.player = new Player({ scene: this });
+        this.player.setScale(0.3);
         this.player.setCollideWorldBounds(false)
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setZoom(1);
@@ -46,11 +46,11 @@ export class MainScene extends Scene {
 
         // Cursor keys
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.cursors.space.on("down", () => {
-            this.player.fire();
-        });
         this.input.on("pointerdown", (pointer) => {
-            this.player.fire(pointer.x, pointer.y);
+            this.pointer = pointer;
+        });
+        this.input.on("pointerup", () => {
+            this.pointer = null
         });
 
         // Overlap enemy with bullets
@@ -107,6 +107,15 @@ export class MainScene extends Scene {
         this.background.tilePositionY += 0.2; // Рух плитки по Y
 
         // Player movement entries
+        if (this.pointer) {
+            if (this.pointer.x > this.scale.width / 2) {
+                this.player.move("right");
+
+            } else {
+                this.player.move("left");
+            }
+        }
+
         if (this.cursors.up.isDown) {
             this.player.move("up");
         }

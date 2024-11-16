@@ -5,7 +5,7 @@ export class Player extends Physics.Arcade.Image {
 
     // Player states: waiting, start, can_move
     state = "waiting";
-    propulsion_fire = null;
+    // propulsion_fire = null;
     scene = null;
     bullets = null;
     baseSpeed = 200;
@@ -18,8 +18,8 @@ export class Player extends Physics.Arcade.Image {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
 
-        this.propulsion_fire = this.scene.add.sprite(this.x - 32, this.y, "propulsion-fire");
-        this.propulsion_fire.play("fire");
+        // this.propulsion_fire = this.scene.add.sprite(this.x - 32, this.y, "propulsion-fire");
+        // this.propulsion_fire.play("fire");
 
         // Bullets group to create pool
         this.bullets = this.scene.physics.add.group({
@@ -62,7 +62,7 @@ export class Player extends Physics.Arcade.Image {
                     });
                 });
 
-                this.propulsion_fire.setPosition(this.x - 32, this.y);
+                // this.propulsion_fire.setPosition(this.x - 32, this.y);
 
                 // When all tween are finished, the player can move
                 this.state = "can_move";
@@ -83,11 +83,10 @@ export class Player extends Physics.Arcade.Image {
             }
             if (direction === "left" ) {
                 this.angle -= this.angleDelta
-                this.updatePropulsionFire();
+                this.speed += this.baseSpeed;
             } else if (direction === "right") {
-                //  && this.y + 75 < this.scene.scale.height
                 this.angle += this.angleDelta;
-                this.updatePropulsionFire();
+                this.speed += this.baseSpeed;
             }
         }
     }
@@ -103,20 +102,20 @@ export class Player extends Physics.Arcade.Image {
     }
 
     updatePropulsionFire() {
-        this.propulsion_fire.setPosition(this.x - 32, this.y);
+        // this.propulsion_fire.setPosition(this.x - 32, this.y);
     }
 
     update() {
         // Sinusoidal movement up and down up and down 2px
         this.y += Math.sin(this.scene.time.now / 200) * 0.10;
-        this.propulsion_fire.y = this.y;
+        // this.propulsion_fire.y = this.y;
 
         const angleInRadians = Phaser.Math.DegToRad(this.angle);
 
         // Використовуємо фізику для руху
         this.body.velocity.x = Math.cos(angleInRadians) * this.speed;
         this.body.velocity.y = Math.sin(angleInRadians) * this.speed + this.scene.physics.world.gravity.y;
-
+        this.speed = this.baseSpeed;
     }
 
 }
